@@ -91,6 +91,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\Users\jonim\source\repos\Garage-Manager\GarageManager\GarageLogic;C:\Users\jonim\source\repos\Garage-Manager\GarageManager\GenericMenu;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,16 +152,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ChangeStatus.h" />
+    <ClInclude Include="Charge.h" />
+    <ClInclude Include="Display.h" />
+    <ClInclude Include="Inflate.h" />
+    <ClInclude Include="Insert.h" />
+    <ClInclude Include="LicenseNumbersList.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Program.h" />
+    <ClInclude Include="Refuel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ChangeStatus.cpp" />
+    <ClCompile Include="Charge.cpp" />
     <ClCompile Include="ConsoleUI.cpp" />
+    <ClCompile Include="Display.cpp" />
+    <ClCompile Include="Inflate.cpp" />
+    <ClCompile Include="Insert.cpp" />
+    <ClCompile Include="LicenseNumbersList.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Refuel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GarageLogic\GarageLogic.vcxproj">
+      <Project>{12dc14ba-c469-41bc-89cc-f1f8e31a91fa}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericMenu\GenericMenu.vcxproj">
+      <Project>{cefc4154-c0a0-4443-af18-80ac560225cc}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

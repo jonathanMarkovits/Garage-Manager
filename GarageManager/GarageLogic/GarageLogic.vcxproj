@@ -147,16 +147,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Car.h" />
+    <ClInclude Include="CarProperties.h" />
+    <ClInclude Include="ColorEnum.h" />
+    <ClInclude Include="ElectricEngine.h" />
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="FuelEngine.h" />
+    <ClInclude Include="FuelEnum.h" />
+    <ClInclude Include="Garage.h" />
+    <ClInclude Include="LicenseTypeEnum.h" />
+    <ClInclude Include="Motorcycle.h" />
+    <ClInclude Include="MotorcycleProperties.h" />
+    <ClInclude Include="Owner.h" />
+    <ClInclude Include="StatusEnum.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Truck.h" />
+    <ClInclude Include="TruckProperties.h" />
+    <ClInclude Include="Vehicle.h" />
+    <ClInclude Include="VehicleProperties.h" />
+    <ClInclude Include="Wheel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Car.cpp" />
+    <ClCompile Include="CarProperties.cpp" />
+    <ClCompile Include="ElectricEngine.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="FuelEngine.cpp" />
+    <ClCompile Include="Garage.cpp" />
+    <ClCompile Include="Motorcycle.cpp" />
+    <ClCompile Include="MotorcycleProperties.cpp" />
+    <ClCompile Include="Owner.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Truck.cpp" />
+    <ClCompile Include="TruckProperties.cpp" />
+    <ClCompile Include="Vehicle.cpp" />
+    <ClCompile Include="VehicleProperties.cpp" />
+    <ClCompile Include="Wheel.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

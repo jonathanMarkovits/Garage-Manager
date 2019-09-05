@@ -1,0 +1,8 @@
+﻿  MainMenu.cpp
+c:\users\jonim\source\repos\garage-manager\garagemanager\genericmenu\mainmenu.cpp(40): warning C4018: '>': signed/unsigned mismatch
+  Menu.cpp
+  MenuItem.cpp
+  SubMenu.cpp
+c:\users\jonim\source\repos\garage-manager\garagemanager\genericmenu\submenu.cpp(27): warning C4018: '<=': signed/unsigned mismatch
+  Generating Code...
+  GenericMenu.vcxproj -> C:\Users\jonim\source\repos\Garage-Manager\GarageManager\Debug\GenericMenu.lib
