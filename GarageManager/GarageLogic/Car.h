@@ -12,5 +12,6 @@ public:
 	Car();
 	~Car();
 	Car(Owner* _owner, VehicleProperties* _properties, Engine* _engine, CarProperties* _carProperties);
+	string toString() override;
 };
 

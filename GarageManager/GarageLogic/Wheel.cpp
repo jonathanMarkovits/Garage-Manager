@@ -29,3 +29,8 @@ void Wheel::inflateAction(float amountOfAirToInflate)
 		currentAirPressure = maxAirPressure;
 	}
 }
+
+string Wheel::toString()
+{
+	return "Manufacturer name: " + manufacturerName + ", max air pressure: " + to_string(maxAirPressure) + ", current air pressure: " + to_string(currentAirPressure) + '\n';
+}

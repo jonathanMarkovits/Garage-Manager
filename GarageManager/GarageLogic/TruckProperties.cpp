@@ -16,3 +16,13 @@ TruckProperties::TruckProperties(bool _containsDangerousMaterials, float _volume
 	containsDangerousMaterials = _containsDangerousMaterials;
 	volumeOfCargo = _volumeOfCargo;
 }
+
+bool TruckProperties::getContainsDangerousMaterials()
+{
+	return containsDangerousMaterials;
+}
+
+float TruckProperties::getVolumeOfCargo()
+{
+	return volumeOfCargo;
+}

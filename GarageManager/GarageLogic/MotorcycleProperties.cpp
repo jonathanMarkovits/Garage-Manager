@@ -16,3 +16,13 @@ MotorcycleProperties::MotorcycleProperties(LicenseTypeEnum _licenseType, int _en
 	licenseType = _licenseType;
 	engineVolume = _engineVolume;
 }
+
+LicenseTypeEnum MotorcycleProperties::getLicenseType()
+{
+	return licenseType;
+}
+
+int MotorcycleProperties::getEngineVolume()
+{
+	return engineVolume;
+}

@@ -153,8 +153,9 @@
     <ClInclude Include="ElectricEngine.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FuelEngine.h" />
-    <ClInclude Include="FuelEnum.h" />
+    <ClInclude Include="FuelTypeEnum.h" />
     <ClInclude Include="Garage.h" />
+    <ClInclude Include="GarageLogicUtils.h" />
     <ClInclude Include="LicenseTypeEnum.h" />
     <ClInclude Include="Motorcycle.h" />
     <ClInclude Include="MotorcycleProperties.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FuelEngine.cpp" />
     <ClCompile Include="Garage.cpp" />
+    <ClCompile Include="GarageLogicUtils.cpp" />
     <ClCompile Include="Motorcycle.cpp" />
     <ClCompile Include="MotorcycleProperties.cpp" />
     <ClCompile Include="Owner.cpp" />

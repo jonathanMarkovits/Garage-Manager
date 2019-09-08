@@ -12,5 +12,6 @@ public:
 	Motorcycle();
 	~Motorcycle();
 	Motorcycle(Owner* _owner, VehicleProperties* _properties, Engine* _engine, MotorcycleProperties* _motorcycleProperties);
+	string toString() override;
 };
 

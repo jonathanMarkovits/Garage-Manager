@@ -16,3 +16,14 @@ Car::Car(Owner * _owner, VehicleProperties * _properties, Engine * _engine, CarP
 {
 	carProperties = _carProperties;
 }
+
+string Car::toString()
+{
+	string toString = "";
+
+	toString += Vehicle::toString();
+	toString += "Color: " + GarageLogicUtils::colorEnumToString(carProperties->getColor()) + '\n';
+	toString += "Number of doors: " + to_string(carProperties->getNumberOfDoors()) + '\n';
+
+	return toString;
+}

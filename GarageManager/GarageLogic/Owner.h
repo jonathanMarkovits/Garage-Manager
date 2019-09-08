@@ -12,6 +12,6 @@ public:
 	Owner(string _name, string _phoneNumber);
 	Owner();
 	~Owner();
-	string getName();
+	string toString();
 };
 

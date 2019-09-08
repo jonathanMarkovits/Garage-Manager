@@ -13,6 +13,12 @@ SubMenu::~SubMenu()
 
 SubMenu::SubMenu(string _name) : Menu(_name)
 {
+	isBlocked = false;
+}
+
+SubMenu::SubMenu(void(*_act)(), string _name) : Menu(_act, _name)
+{
+	isBlocked = false;
 }
 
 void SubMenu::addItem(Menu* item)
@@ -20,17 +26,45 @@ void SubMenu::addItem(Menu* item)
 	menuItems.push_back(item);
 }
 
-void SubMenu::show(bool exitOrBack)
+void SubMenu::deleteItem(int i)
 {
-	cout << name << ":\n";
-	cout << "0. " << (exitOrBack ? "exit" : "back") << '\n';
-	for (int i = 1; i <= menuItems.size(); i++)
+	menuItems.erase(menuItems.begin() + i);
+}
+
+void SubMenu::show()
+{
+	string str = "";
+	int i = 1;
+
+	str += name + ":\n\n";
+	for (Menu* menuItem : menuItems)
 	{
-		cout << i << ". " << menuItems[i - 1]->getName() + '\n';
+		if (!menuItem->getVisible())
+		{
+			continue;
+		}
+
+		str += to_string(i++) + ". " + menuItem->getName() + '\n';
 	}
+
+	cout << str;
 }
 
 vector<Menu*> SubMenu::getMenuItems()
 {
 	return menuItems;
+}
+
+bool SubMenu::getIsBlocked()
+{
+	return isBlocked;
+}
+
+void SubMenu::setIsBlocked(bool _isBlocked)
+{
+	isBlocked = _isBlocked;
+}
+
+void SubMenu::dummy()
+{
 }

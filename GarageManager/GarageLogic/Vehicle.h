@@ -3,7 +3,7 @@
 #include "Owner.h"
 #include "VehicleProperties.h"
 #include "Engine.h"
-//#include "StatusEnum.h"
+#include "GarageLogicUtils.h"
 using namespace std;
 
 class Vehicle
@@ -12,11 +12,15 @@ class Vehicle
 	Owner* owner;
 	VehicleProperties* properties;
 	Engine* engine;
-//	StatusEnum status;
+	StatusEnum status;
 
 public:
 	Vehicle();
 	~Vehicle();
 	Vehicle(Owner* _owner, VehicleProperties* _properties, Engine* _engine);
-	string toString();
+	virtual string toString();
+	VehicleProperties* getProperties();
+	void setStatus(StatusEnum _status);
+	StatusEnum getStatus();
+	Engine* getEngine();
 };

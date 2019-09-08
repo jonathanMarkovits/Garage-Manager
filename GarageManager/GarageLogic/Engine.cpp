@@ -26,3 +26,8 @@ void Engine::recharge(float amountOfEnergyToAdd)
 
 	currentAmountOfEnergy += amountOfEnergyToAdd;
 }
+
+float Engine::getRemainingEnergyPercentage()
+{
+	return currentAmountOfEnergy / maxAmountOfEnergy;
+}

@@ -1,7 +1,2 @@
-﻿  Car.cpp
-  Garage.cpp
-  Motorcycle.cpp
-  Truck.cpp
-  Vehicle.cpp
-  Generating Code...
+﻿  Garage.cpp
   GarageLogic.vcxproj -> C:\Users\jonim\source\repos\Garage-Manager\GarageManager\Debug\GarageLogic.lib

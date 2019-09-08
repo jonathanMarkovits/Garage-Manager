@@ -16,7 +16,12 @@ Owner::~Owner()
 {
 }
 
-string Owner::getName()
+string Owner::toString()
 {
-	return name;
+	string toString = "";
+
+	toString += "Owner's name: " + name + '\n';
+	toString += "Owner's phone number: " + phoneNumber + '\n';
+
+	return toString;
 }

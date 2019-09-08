@@ -14,5 +14,6 @@ public:
 	~Wheel();
 	Wheel(string _manufacturerName, float _currentAirPressure, float _maxAirPressure);
 	void inflateAction(float amountOfAirToInflate);
+	string toString();
 };
 

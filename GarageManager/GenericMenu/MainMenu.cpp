@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "MainMenu.h"
 
-
 MainMenu::MainMenu()
 {
 }
@@ -15,21 +14,24 @@ MainMenu::MainMenu(SubMenu* main)
 	stack.push(main);
 }
 
-
 void MainMenu::run()
 {
 	SubMenu* subMenuPtr;
 	MenuItem* menuItemPtr;
+	Menu* menu;
+	vector<Menu*> visibleItems;
 	string tmp;
-	bool mainMenu;
+	bool exitOrBack;
 	bool validInput;
 	int choise;
 
 	while (true)
 	{
-		mainMenu = stack.size() == 1;
+		visibleItems = getVisibleItems();
+		exitOrBack = stack.size() == 1;
 		validInput = false;
-		stack.top()->show(mainMenu);
+		stack.top()->show();
+		cout << "0. " << (exitOrBack ? "exit" : "back") << '\n';
 		cout << "\nPlease choose an option.\n";
 		while (!validInput)
 		{
@@ -37,18 +39,18 @@ void MainMenu::run()
 			{
 				cin >> tmp;
 				choise = stoi(tmp);
-				if (choise < 0 || choise > stack.top()->getMenuItems().size()) throw "Invalid input";
+				if (choise < 0 || choise > visibleItems.size()) throw new exception;
 				validInput = true;
 			}
 			catch (...)
 			{
-				cout << "Invalid input, the program expects a number between 0 to " << getCurrentMenu()->getMenuItems().size() << ".\n";
+				cout << "Invalid input, the program expects a number between 0 to " << visibleItems.size() << ".\n";
 				continue;
 			}
 		}
 
 		if (--choise == -1) {
-			if (mainMenu)
+			if (exitOrBack)
 			{
 				break;
 			}
@@ -60,17 +62,26 @@ void MainMenu::run()
 			}
 		}
 
-		subMenuPtr = dynamic_cast<SubMenu*>(stack.top()->getMenuItems()[choise]);
+		menu = visibleItems[choise];
+		menu->activate();
+
+		subMenuPtr = dynamic_cast<SubMenu*>(menu);
 		if (subMenuPtr != 0)
 		{
-			stack.push(subMenuPtr);
+			if (!subMenuPtr->getIsBlocked())
+			{
+				stack.push(subMenuPtr);
+			}
+			else
+			{
+				cout << "The program cannot open this menu.\n";
+				system("pause");
+			}
 		}
 		else
 		{
-			menuItemPtr = dynamic_cast<MenuItem*>(stack.top()->getMenuItems()[choise]);
-			cout << '\n';
-			menuItemPtr->activate();
-			cout << "\n";
+			menuItemPtr = dynamic_cast<MenuItem*>(menu);
+			cout << "\nThe operation complited seccessfully.\n";
 			system("pause");
 		}
 
@@ -81,4 +92,19 @@ void MainMenu::run()
 SubMenu* MainMenu::getCurrentMenu()
 {
 	return stack.top();
+}
+
+vector<Menu*> MainMenu::getVisibleItems()
+{
+	vector<Menu*> visibleItems;
+
+	for (Menu* item : getCurrentMenu()->getMenuItems())
+	{
+		if (item->getVisible())
+		{
+			visibleItems.push_back(item);
+		}
+	}
+
+	return visibleItems;
 }

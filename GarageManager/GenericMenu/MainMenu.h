@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <stack>
+#include <vector>
 #include "SubMenu.h"
 #include "MenuItem.h"
 using namespace std;
@@ -16,5 +17,6 @@ public:
 	MainMenu(SubMenu* main);
 	void run();
 	SubMenu* getCurrentMenu();
+	vector<Menu*> getVisibleItems();
 };
 

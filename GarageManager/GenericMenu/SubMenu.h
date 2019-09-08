@@ -8,13 +8,19 @@ class SubMenu : public Menu
 {
 
 	vector<Menu*> menuItems;
+	bool isBlocked;
 
 public:
 	SubMenu();
 	~SubMenu();
 	SubMenu(string _name);
+	SubMenu(void(*_act)(), string _name);
 	void addItem(Menu* item);
-	void show(bool exitOrBack);
+	void deleteItem(int i);
+	void show();
 	vector<Menu*> getMenuItems();
+	bool getIsBlocked();
+	void setIsBlocked(bool _isBlocked);
+	void dummy();
 };
 

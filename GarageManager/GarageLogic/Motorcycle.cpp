@@ -16,3 +16,14 @@ Motorcycle::Motorcycle(Owner* _owner, VehicleProperties* _properties, Engine* _e
 {
 	motorcycleProperties = _motorcycleProperties;
 }
+
+string Motorcycle::toString()
+{
+	string toString = "";
+
+	toString += Vehicle::toString();
+	toString += "License type: " + GarageLogicUtils::licenseTypeEnumToString(motorcycleProperties->getLicenseType()) + '\n';
+	toString += "Engine's volume: " + to_string(motorcycleProperties->getEngineVolume()) + '\n';
+
+	return toString;
+}

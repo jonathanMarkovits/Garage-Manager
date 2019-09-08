@@ -1,17 +1,19 @@
 #pragma once
 #include <string>
 #include "Engine.h"
+#include "GarageLogicUtils.h"
 using namespace std;
 
 class FuelEngine : public Engine
 {
 
-	string fuelType;
+	FuelTypeEnum fuelType;
 
 public:
 	FuelEngine();
 	~FuelEngine();
-	FuelEngine(string _fuelType, float _currentAmountOfFuel, float _maxAmountOfFuel);
-	void refueling(float amountOfFuelToAdd, string _fuelType);
+	FuelEngine(FuelTypeEnum _fuelType, float _currentAmountOfFuel, float _maxAmountOfFuel);
+	void refueling(float amountOfFuelToAdd, FuelTypeEnum _fuelType);
+	string toString() override;
 };
 

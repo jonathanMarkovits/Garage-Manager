@@ -5,4 +5,4 @@ enum StatusEnum
 	inRepair,
 	repaired,
 	payedFor
-}
+};
