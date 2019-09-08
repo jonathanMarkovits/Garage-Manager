@@ -1,13 +1,13 @@
 # Garage-Manager
 Developing a computer software that “manages” a vehicle garage. 
 The system will manage a garage that handles these five types of vehicles - 
-* <b>Fuel-Based Motorcycle</b>
+* <b>Fuel-Based Motorcycle</b>  
 2 tires with max air pressure of 33 (psi), Octane 95 (fuel), 8 liters fuel tank 
-* <b>Electric Motorcycle</b> 
+* <b>Electric Motorcycle</b>  
 2 tires with max air pressure of 33 (psi), Max battery life – 1.4 hours 
-* <b>Fuel-Based Car</b> 
+* <b>Fuel-Based Car</b>  
 4 tires with max air pressure of 31 (psi), Octane 96 fuel, 55 liter fuel tank 
-* <b>Electric Car</b> 
+* <b>Electric Car</b>  
 4 tires with max air pressure of 31 (psi), Max battery life – 1.8 hours 
 * <b>Fuel-Based Truck</b>  
 12 tires with max air pressure of 26 (psi), Soler fuel, 110 liter fuel tank 
