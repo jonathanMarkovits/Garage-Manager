@@ -9,28 +9,28 @@ MainMenu::~MainMenu()
 {
 }
 
-MainMenu::MainMenu(SubMenu* main)
+MainMenu::MainMenu(SubMenu* i_Menu)
 {
-	stack.push(main);
+	m_MenuStack.push(i_Menu);
 }
 
-void MainMenu::run()
+void MainMenu::Run()
 {
-	SubMenu* subMenuPtr;
-	MenuItem* menuItemPtr;
-	Menu* menu;
+	SubMenu* subMenuPtr = nullptr;
+	MenuItem* menuItemPtr = nullptr;
+	Menu* menu = nullptr;
 	vector<Menu*> visibleItems;
-	string tmp;
-	bool exitOrBack;
-	bool validInput;
-	int choise;
+	string tmp = "";
+	bool exitOrBack = false;
+	bool validInput = false;
+	int choise = 0;
 
 	while (true)
 	{
 		visibleItems = getVisibleItems();
-		exitOrBack = stack.size() == 1;
+		exitOrBack = m_MenuStack.size() == 1;
 		validInput = false;
-		stack.top()->show();
+		m_MenuStack.top()->Show();
 		cout << "0. " << (exitOrBack ? "exit" : "back") << '\n';
 		cout << "\nPlease choose an option.\n";
 		while (!validInput)
@@ -56,21 +56,21 @@ void MainMenu::run()
 			}
 			else
 			{
-				stack.pop();
+				m_MenuStack.pop();
 				system("CLS");
 				continue;
 			}
 		}
 
 		menu = visibleItems[choise];
-		menu->activate();
+		menu->Activate();
 
 		subMenuPtr = dynamic_cast<SubMenu*>(menu);
 		if (subMenuPtr != 0)
 		{
-			if (!subMenuPtr->getIsBlocked())
+			if (!subMenuPtr->GetIsBlocked())
 			{
-				stack.push(subMenuPtr);
+				m_MenuStack.push(subMenuPtr);
 			}
 			else
 			{
@@ -81,7 +81,7 @@ void MainMenu::run()
 		else
 		{
 			menuItemPtr = dynamic_cast<MenuItem*>(menu);
-			cout << "\nThe operation complited seccessfully.\n";
+			cout << "\nThe operation completed seccessfully.\n";
 			system("pause");
 		}
 
@@ -91,16 +91,16 @@ void MainMenu::run()
 
 SubMenu* MainMenu::getCurrentMenu()
 {
-	return stack.top();
+	return m_MenuStack.top();
 }
 
 vector<Menu*> MainMenu::getVisibleItems()
 {
 	vector<Menu*> visibleItems;
 
-	for (Menu* item : getCurrentMenu()->getMenuItems())
+	for (Menu* item : getCurrentMenu()->GetMenuItems())
 	{
-		if (item->getVisible())
+		if (item->GetVisiblity())
 		{
 			visibleItems.push_back(item);
 		}

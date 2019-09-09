@@ -11,11 +11,11 @@ MenuItem::~MenuItem()
 {
 }
 
-MenuItem::MenuItem(string _name) : Menu(_name)
+MenuItem::MenuItem(string i_Name) : Menu(i_Name)
 {
 }
 
-MenuItem::MenuItem(void(*_act)(), string _name) : Menu(_act, _name)
+MenuItem::MenuItem(void(*i_ActivateFunction)(), string i_Name) : Menu(i_ActivateFunction, i_Name)
 {
 }
 

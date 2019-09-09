@@ -3,5 +3,5 @@
 
 int main()
 {
-	Program::run();
+	Program::Run();
 }

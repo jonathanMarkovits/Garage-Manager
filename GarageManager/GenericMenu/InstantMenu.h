@@ -4,12 +4,12 @@
 class InstantMenu
 {
 
-	SubMenu* menu;
+	SubMenu* m_Menu;
 
 public:
 	InstantMenu();
 	~InstantMenu();
-	InstantMenu(SubMenu* _menu);
-	int run();
+	InstantMenu(SubMenu* i_Menu);
+	int Run();
 };
 

@@ -28,11 +28,6 @@ Vehicle* Garage::getVehicleByLicenseNumber(string licenseNumber)
 		}
 	}
 
-	//if (!returnedVehicle)
-	//{
-	//	//throw exception;
-	//}
-
 	return returnedVehicle;
 }
 

@@ -9,13 +9,15 @@ using namespace std;
 class MainMenu
 {
 
-	stack<SubMenu*> stack;
+	stack<SubMenu*> m_MenuStack;
 
 public:
 	MainMenu();
 	~MainMenu();
-	MainMenu(SubMenu* main);
-	void run();
+	MainMenu(SubMenu* i_Menu);
+	void Run();
+
+private:
 	SubMenu* getCurrentMenu();
 	vector<Menu*> getVisibleItems();
 };

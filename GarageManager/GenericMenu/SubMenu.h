@@ -7,20 +7,21 @@ using namespace std;
 class SubMenu : public Menu
 {
 
-	vector<Menu*> menuItems;
-	bool isBlocked;
+	vector<Menu*> m_MenuItems;
+	bool m_IsBlocked;
 
 public:
 	SubMenu();
 	~SubMenu();
-	SubMenu(string _name);
-	SubMenu(void(*_act)(), string _name);
-	void addItem(Menu* item);
-	void deleteItem(int i);
-	void show();
-	vector<Menu*> getMenuItems();
-	bool getIsBlocked();
-	void setIsBlocked(bool _isBlocked);
-	void dummy();
+	SubMenu(string i_Name);
+	SubMenu(void(*i_ActivateFunction)(), string i_Name);
+	void AddItem(Menu* i_Item);
+	void Show();
+	bool GetIsBlocked();
+	void SetIsBlocked(bool i_IsBlocked);
+	vector<Menu*> GetMenuItems();
+
+private:
+	void dummy() override;
 };
 

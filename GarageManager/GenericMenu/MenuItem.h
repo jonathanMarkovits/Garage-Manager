@@ -6,8 +6,10 @@ class MenuItem : public Menu
 public:
 	MenuItem();
 	~MenuItem();
-	MenuItem(string _name); //delete
-	MenuItem(void(*_act)(), string _name);
-	void dummy();
+	MenuItem(string i_Name);
+	MenuItem(void(*i_ActivateFunction)(), string i_Name);
+
+private:
+	void dummy() override;
 };
 

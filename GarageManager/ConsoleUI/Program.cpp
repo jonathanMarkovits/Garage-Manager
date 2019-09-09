@@ -3,12 +3,12 @@
 
 typedef void(*activateFunctionDef)();
 
-Garage* Program::garage = new Garage();
-Vehicle* Program::currentVehicle = nullptr;
-SubMenu* Program::vehicleOperation = nullptr;
-SubMenu* Program::refuel = nullptr;
-MenuItem* Program::charge = nullptr;
-bool Program::validVehicle = false;
+Garage* Program::s_Garage = new Garage();
+Vehicle* Program::s_CurrentVehicle = nullptr;
+SubMenu* Program::s_VehicleOperation = nullptr;
+SubMenu* Program::s_Refuel = nullptr;
+MenuItem* Program::s_Charge = nullptr;
+bool Program::s_ValidVehicle = false;
 
 Program::Program()
 {
@@ -18,118 +18,135 @@ Program::~Program()
 {
 }
 
-void Program::run()
+void Program::Run()
 {
 	SubMenu* main = new SubMenu("Garage Manager");
 	MainMenu* mainMenu = new MainMenu(main);
 
 	SubMenu* insert = new SubMenu("Insert a new vehicle into the garage");
-	MenuItem* insertFuelBasedMotorcycle = new MenuItem(&insertFuelBasedMotorcycleActivate, "Fuel-Based Motorcycle\n   2 tires with max air pressure of 33 (psi), Octane 95 (fuel), 8 liters fuel tank\n");
-	MenuItem* insertElectricMotorcycle = new MenuItem(&insertElectricMotorcycleActivate, "Electric Motorcycle\n   2 tires with max air pressure of 33 (psi), Max battery life – 1.4 hours\n");
-	MenuItem* insertFuelBasedCar = new MenuItem(&insertFuelBasedCarActivate, "Fuel-Based Car\n   4 tires with max air pressure of 31 (psi), Octane 96 fuel, 55 liter fuel tank\n");
-	MenuItem* insertElectricCar = new MenuItem(&insertElectricCarActivate, "Electric Car\n   4 tires with max air pressure of 31 (psi), Max battery life – 1.8 hours\n");
-	MenuItem* insertFuelBasedTruck = new MenuItem(&insertFuelBasedTruckActivate, "Fuel-Based Truck\n   12 tires with max air pressure of 26 (psi), Soler fuel, 110 liter fuel tank\n");
+	MenuItem* insertFuelBasedMotorcycle = new MenuItem(&InsertFuelBasedMotorcycleActivate, "Fuel-Based Motorcycle\n   2 tires with max air pressure of 33 (psi), Octane 95 (fuel), 8 liters fuel tank\n");
+	MenuItem* insertElectricMotorcycle = new MenuItem(&InsertElectricMotorcycleActivate, "Electric Motorcycle\n   2 tires with max air pressure of 33 (psi), Max battery life – 1.4 hours\n");
+	MenuItem* insertFuelBasedCar = new MenuItem(&InsertFuelBasedCarActivate, "Fuel-Based Car\n   4 tires with max air pressure of 31 (psi), Octane 96 fuel, 55 liter fuel tank\n");
+	MenuItem* insertElectricCar = new MenuItem(&InsertElectricCarActivate, "Electric Car\n   4 tires with max air pressure of 31 (psi), Max battery life – 1.8 hours\n");
+	MenuItem* insertFuelBasedTruck = new MenuItem(&InsertFuelBasedTruckActivate, "Fuel-Based Truck\n   12 tires with max air pressure of 26 (psi), Soler fuel, 110 liter fuel tank\n");
 
 	SubMenu* licenseNumberList = new SubMenu("Display a list of license numbers currently in the garage");
-	MenuItem* displayAll = new MenuItem(&displayAllActivate, "Display all license numbers.");
-	MenuItem* displayInRepair = new MenuItem(&displayInRepairActivate, "Display 'In repair' license numbers.");
-	MenuItem* displayRepaired = new MenuItem(&displayRepairedActivate, "Display 'Repaired' license numbers.");
-	MenuItem* displayPayedFor = new MenuItem(&displayPayedForActivate, "Display 'Payed for' license numbers.");
+	MenuItem* displayAll = new MenuItem(&DisplayAllActivate, "Display all license numbers.");
+	MenuItem* displayInRepair = new MenuItem(&DisplayInRepairActivate, "Display 'In repair' license numbers.");
+	MenuItem* displayRepaired = new MenuItem(&DisplayRepairedActivate, "Display 'Repaired' license numbers.");
+	MenuItem* displayPayedFor = new MenuItem(&DisplayPayedForActivate, "Display 'Payed for' license numbers.");
 
-	vehicleOperation = new SubMenu("Find a vehicle by license number");
-	vehicleOperation->insertActivateFunction((activateFunctionDef)&vehicleOperationActivate);
-	vehicleOperation->insertActivateFunction((activateFunctionDef)&fuelOrElectricMenu);
+	s_VehicleOperation = new SubMenu("Find a vehicle by license number");
+	s_VehicleOperation->InsertActivateFunction((activateFunctionDef)&VehicleOperationActivate);
+	s_VehicleOperation->InsertActivateFunction((activateFunctionDef)&FuelOrElectricMenu);
 	
 	SubMenu* changeStatus = new SubMenu("Change status");
-	MenuItem* inRepair = new MenuItem(&inRepairActivate, "In repair");
-	MenuItem* repaired = new MenuItem(&repairedActivate, "Repaired");
-	MenuItem* payedFor = new MenuItem(&payedForActivate, "Payed for");
+	MenuItem* inRepair = new MenuItem(&InRepairActivate, "In repair");
+	MenuItem* repaired = new MenuItem(&RepairedActivate, "Repaired");
+	MenuItem* payedFor = new MenuItem(&PayedForActivate, "Payed for");
 
-	MenuItem* inflate = new MenuItem(&inflateActivate, "Inflate tires to maximum.");
+	MenuItem* inflate = new MenuItem(&InflateActivate, "Inflate tires to maximum.");
 
-	refuel = new SubMenu("Refuel");
-	MenuItem* soler = new MenuItem(&solerActivate, "Soler");
-	MenuItem* octane95 = new MenuItem(&octane95Activate, "Octane 95");
-	MenuItem* octane96 = new MenuItem(&octane96Activate, "Octane 96");
-	MenuItem* octane98 = new MenuItem(&octane98Activate, "Octane 98");
+	s_Refuel = new SubMenu("Refuel");
+	MenuItem* soler = new MenuItem(&SolerActivate, "Soler");
+	MenuItem* octane95 = new MenuItem(&Octane95Activate, "Octane 95");
+	MenuItem* octane96 = new MenuItem(&Octane96Activate, "Octane 96");
+	MenuItem* octane98 = new MenuItem(&Octane98Activate, "Octane 98");
 
-	charge = new MenuItem(&chargeActivate, "Charge");
-	MenuItem* display = new MenuItem(&displayActivate, "Display vehicle information.");
+	s_Charge = new MenuItem(&ChargeActivate, "Charge");
+	MenuItem* display = new MenuItem(&DisplayActivate, "Display vehicle information.");
 
-	licenseNumberList->addItem(displayAll);
-	licenseNumberList->addItem(displayInRepair);
-	licenseNumberList->addItem(displayRepaired);
-	licenseNumberList->addItem(displayPayedFor);
+	licenseNumberList->AddItem(displayAll);
+	licenseNumberList->AddItem(displayInRepair);
+	licenseNumberList->AddItem(displayRepaired);
+	licenseNumberList->AddItem(displayPayedFor);
 
-	refuel->addItem(soler);
-	refuel->addItem(octane95);
-	refuel->addItem(octane96);
-	refuel->addItem(octane98);
+	s_Refuel->AddItem(soler);
+	s_Refuel->AddItem(octane95);
+	s_Refuel->AddItem(octane96);
+	s_Refuel->AddItem(octane98);
 
-	insert->addItem(insertFuelBasedMotorcycle);
-	insert->addItem(insertElectricMotorcycle);
-	insert->addItem(insertFuelBasedCar);
-	insert->addItem(insertElectricCar);
-	insert->addItem(insertFuelBasedTruck);
+	insert->AddItem(insertFuelBasedMotorcycle);
+	insert->AddItem(insertElectricMotorcycle);
+	insert->AddItem(insertFuelBasedCar);
+	insert->AddItem(insertElectricCar);
+	insert->AddItem(insertFuelBasedTruck);
 
-	main->addItem(insert);
-	main->addItem(licenseNumberList);
-	main->addItem(vehicleOperation);
+	main->AddItem(insert);
+	main->AddItem(licenseNumberList);
+	main->AddItem(s_VehicleOperation);
 
-	vehicleOperation->addItem(changeStatus);
-	vehicleOperation->addItem(inflate);
-	vehicleOperation->addItem(refuel);
-	vehicleOperation->addItem(charge);
-	vehicleOperation->addItem(display);
+	s_VehicleOperation->AddItem(changeStatus);
+	s_VehicleOperation->AddItem(inflate);
+	s_VehicleOperation->AddItem(s_Refuel);
+	s_VehicleOperation->AddItem(s_Charge);
+	s_VehicleOperation->AddItem(display);
 
-	changeStatus->addItem(inRepair);
-	changeStatus->addItem(repaired);
-	changeStatus->addItem(payedFor);
+	changeStatus->AddItem(inRepair);
+	changeStatus->AddItem(repaired);
+	changeStatus->AddItem(payedFor);
 //	std::cout << std::fixed;
 //	std::cout << std::setprecision(2);
-	mainMenu->run();
+	
+	mainMenu->Run();
 }
 
-VehicleProperties* Program::getVehicleProperties(int numberOfWheels, float maxAirPressure)
+VehicleProperties* Program::GetVehicleProperties(int i_NumberOfWheels, float i_MaxAirPressure)
 {
 	string modelName = "";
 	string licenseNumber = "";
 	string wheelManufacturerName = "";
 	vector<Wheel*> wheels;
-	Wheel* wheel;
+	Wheel* wheel = nullptr;
 	float currentAirPressure = 0;
+	bool uniqueLicenseNumber = false;
+	bool firstTime = true;
 
-	cout << "Please enter the model name.\n";
+	cout << "Please enter the model name." << endl;
 	cin >> modelName;
-	cout << "Please enter the license number.\n";
-	cin >> licenseNumber;
-	cout << "Please enter the wheels' manufacturer name.\n";
-	cin >> wheelManufacturerName;
-	for (int i = 0; i < numberOfWheels; i++)
+	cout << "Please enter the license number." << endl;
+	while (!uniqueLicenseNumber)
 	{
-		cout << "Please enter the current air pressure of wheel number " << (i + 1) << ".\n";
+		if (!firstTime)
+		{
+			cout << "This license number already exsists in the garage, please enter a unique one." << endl;
+		}
+
+		cin >> licenseNumber;
+		firstTime = false;
+		if (!Program::s_Garage->getVehicleByLicenseNumber(licenseNumber))
+		{
+			uniqueLicenseNumber = true;
+		}
+	}
+
+	cout << "Please enter the wheels' manufacturer name." << endl;
+	cin >> wheelManufacturerName;
+	for (int i = 0; i < i_NumberOfWheels; i++)
+	{
+		cout << "Please enter the current air pressure of wheel number " << (i + 1) << '.' << endl;
 		cin >> currentAirPressure;
-		wheel = new Wheel(wheelManufacturerName, currentAirPressure, maxAirPressure);
+		wheel = new Wheel(wheelManufacturerName, currentAirPressure, i_MaxAirPressure);
 		wheels.push_back(wheel);
 	}
 
 	return new VehicleProperties(modelName, licenseNumber, wheels);
 }
 
-Owner* Program::getOwnersDetails()
+Owner* Program::GetOwnersDetails()
 {
 	string name = "";
 	string phoneNumber = "";
 	
-	cout << "Please enter the owner's name.\n";
+	cout << "Please enter the owner's name." << endl;
 	cin >> name;
-	cout << "Please type the owner's phone number.\n";
+	cout << "Please type the owner's phone number." << endl;
 	cin >> phoneNumber;
 
 	return new Owner(name, phoneNumber);
 }
 
-CarProperties* Program::getCarProperties()
+CarProperties* Program::GetCarProperties()
 {
 	SubMenu* menu = new SubMenu("Please choose the right color");
 	InstantMenu* colorMenu = new InstantMenu(menu);
@@ -140,18 +157,18 @@ CarProperties* Program::getCarProperties()
 	ColorEnum color = (ColorEnum)0;
 	int numberOfDoors = 0;
 
-	menu->addItem(black);
-	menu->addItem(blue);
-	menu->addItem(gray);
-	menu->addItem(red);
-	color = (ColorEnum)(colorMenu->run() - 1);
-	cout << "Please enter the amount of doors.\n";
+	menu->AddItem(black);
+	menu->AddItem(blue);
+	menu->AddItem(gray);
+	menu->AddItem(red);
+	color = (ColorEnum)(colorMenu->Run() - 1);
+	cout << "Please enter the amount of doors." << endl;
 	cin >> numberOfDoors;
 
 	return new CarProperties(color, numberOfDoors);
 }
 
-FuelEngine* Program::getFuelEngineDetails(float maxAmountOfFuel)
+FuelEngine* Program::GetFuelEngineDetails(float i_MaxAmountOfFuel)
 {
 	FuelTypeEnum fuelType = (FuelTypeEnum)0;
 	float currentAmountOfFuel = 0;
@@ -162,28 +179,28 @@ FuelEngine* Program::getFuelEngineDetails(float maxAmountOfFuel)
 	MenuItem* octane98 = new MenuItem("Octane 98");
 	InstantMenu* fuelMenu = new InstantMenu(menu);
 
-	menu->addItem(soler);
-	menu->addItem(octane95);
-	menu->addItem(octane96);
-	menu->addItem(octane98);
-	fuelType = (FuelTypeEnum)(fuelMenu->run() - 1);
-	cout << "Please enter the current amount of fuel.\n";
+	menu->AddItem(soler);
+	menu->AddItem(octane95);
+	menu->AddItem(octane96);
+	menu->AddItem(octane98);
+	fuelType = (FuelTypeEnum)(fuelMenu->Run() - 1);
+	cout << "Please enter the current amount of fuel." << endl;
 	cin >> currentAmountOfFuel;
 	
-	return new FuelEngine(fuelType, maxAmountOfFuel, currentAmountOfFuel);
+	return new FuelEngine(fuelType, i_MaxAmountOfFuel, currentAmountOfFuel);
 }
 
-ElectricEngine* Program::getElectricEngineDetails(float maxAmountOfEnergy)
+ElectricEngine* Program::GetElectricEngineDetails(float i_MaxAmountOfEnergy)
 {
 	float currentAmountOfEnergy = 0;
 
-	cout << "Please enter the current amount of fuel.\n";
+	cout << "Please enter the current amount of fuel." << endl;
 	cin >> currentAmountOfEnergy;
 
-	return new ElectricEngine(currentAmountOfEnergy, maxAmountOfEnergy);
+	return new ElectricEngine(currentAmountOfEnergy, i_MaxAmountOfEnergy);
 }
 
-MotorcycleProperties* Program::getMotorcycleProperties()
+MotorcycleProperties* Program::GetMotorcycleProperties()
 {
 	SubMenu* menu = new SubMenu("Please choose the license's type.");
 	InstantMenu* licenseTypeMenu = new InstantMenu(menu);
@@ -194,40 +211,40 @@ MotorcycleProperties* Program::getMotorcycleProperties()
 	LicenseTypeEnum licenseType = (LicenseTypeEnum)0;
 	int engineVolume = 0;
 
-	menu->addItem(a);
-	menu->addItem(a1);
-	menu->addItem(a2);
-	menu->addItem(b);
-	licenseType = (LicenseTypeEnum)(licenseTypeMenu->run() - 1);
-	cout << "Please enter the engine's volume.\n";
+	menu->AddItem(a);
+	menu->AddItem(a1);
+	menu->AddItem(a2);
+	menu->AddItem(b);
+	licenseType = (LicenseTypeEnum)(licenseTypeMenu->Run() - 1);
+	cout << "Please enter the engine's volume." << endl;
 	cin >> engineVolume;
 
 	return new MotorcycleProperties(licenseType, engineVolume);
 }
 
-string Program::getLicenseNumber()
+string Program::GetLicenseNumber()
 {
 	string licenseNumber = "";
 
-	cout << "Please enter a license number.\n";
+	cout << "Please enter a license number." << endl;
 	cin >> licenseNumber;
 
 	return licenseNumber;
 }
 
-TruckProperties* Program::getTruckProperties()
+TruckProperties* Program::GetTruckProperties()
 {
 	char ans = 0;
 	bool containsDangerousMaterials = false;
 	bool firstTry = true;
 	float volumeOfCargo = 0;
 
-	cout << "Does the truck contains toxic dangerous materials? (y/n)\n";
+	cout << "Does the truck contains toxic dangerous materials? (y/n)" << endl;
 	while (ans != 'y' && ans != 'n')
 	{
 		if (!firstTry)
 		{
-			cout << "The program expects 'y' or 'n' only.\n";
+			cout << "The program expects 'y' or 'n' only." << endl;
 		}
 		else
 		{
@@ -241,113 +258,113 @@ TruckProperties* Program::getTruckProperties()
 		containsDangerousMaterials = true;
 	}
 
-	cout << "Please enter the volume of the cargo.\n";
+	cout << "Please enter the volume of the cargo." << endl;
 	cin >> volumeOfCargo;
 	
 	return new TruckProperties(containsDangerousMaterials, volumeOfCargo);
 }
 
-void Program::vehicleOperationActivate()
+void Program::VehicleOperationActivate()
 {
-	string licenseNumber = Program::getLicenseNumber();
-	Program::currentVehicle = Program::garage->getVehicleByLicenseNumber(licenseNumber);
+	string licenseNumber = Program::GetLicenseNumber();
+	Program::s_CurrentVehicle = Program::s_Garage->getVehicleByLicenseNumber(licenseNumber);
 
-	Program::vehicleOperation->setIsBlocked(false);
-	Program::validVehicle = true;
-	if (!Program::currentVehicle)
+	Program::s_VehicleOperation->SetIsBlocked(false);
+	Program::s_ValidVehicle = true;
+	if (!Program::s_CurrentVehicle)
 	{
-		Program::vehicleOperation->setIsBlocked(true);
-		cout << "This license number is not registered.\n";
-		Program::validVehicle = false;
+		Program::s_VehicleOperation->SetIsBlocked(true);
+		cout << "This license number is not registered." << endl;
+		Program::s_ValidVehicle = false;
 	}
 }
 
-void Program::fuelOrElectricMenu()
+void Program::FuelOrElectricMenu()
 {
 	FuelEngine* fuelEnginePtr;
 	
-	if (Program::validVehicle)
+	if (Program::s_ValidVehicle)
 	{
-		fuelEnginePtr = dynamic_cast<FuelEngine*>(Program::currentVehicle->getEngine());
+		fuelEnginePtr = dynamic_cast<FuelEngine*>(Program::s_CurrentVehicle->getEngine());
 
 		if (fuelEnginePtr)
 		{
-			Program::refuel->setVisible(true);
-			Program::charge->setVisible(false);
+			Program::s_Refuel->SetVisiblity(true);
+			Program::s_Charge->SetVisiblity(false);
 		}
 		else
 		{
-			Program::refuel->setVisible(false);
-			Program::charge->setVisible(true);
+			Program::s_Refuel->SetVisiblity(false);
+			Program::s_Charge->SetVisiblity(true);
 		}
 	}
 }
 
-void Program::insertFuelBasedMotorcycleActivate()
+void Program::InsertFuelBasedMotorcycleActivate()
 {
-	Owner* owner = Program::getOwnersDetails();
-	VehicleProperties* vehicleProperties = Program::getVehicleProperties(2, 33);
-	Engine* engine = Program::getFuelEngineDetails(8);
-	MotorcycleProperties* motorcyclePropertise = Program::getMotorcycleProperties();
+	Owner* owner = Program::GetOwnersDetails();
+	VehicleProperties* vehicleProperties = Program::GetVehicleProperties(2, 33);
+	Engine* engine = Program::GetFuelEngineDetails(8);
+	MotorcycleProperties* motorcyclePropertise = Program::GetMotorcycleProperties();
 	Vehicle* motorcycle = new Motorcycle(owner, vehicleProperties, engine, motorcyclePropertise);
 
-	Program::garage->addVehicle(motorcycle);
+	Program::s_Garage->addVehicle(motorcycle);
 }
 
-void Program::insertElectricMotorcycleActivate()
+void Program::InsertElectricMotorcycleActivate()
 {
-	Owner* owner = Program::getOwnersDetails();
-	VehicleProperties* vehicleProperties = Program::getVehicleProperties(2, 33);
-	Engine* engine = Program::getElectricEngineDetails(1.4);
-	MotorcycleProperties* motorcycleProperties = Program::getMotorcycleProperties();
+	Owner* owner = Program::GetOwnersDetails();
+	VehicleProperties* vehicleProperties = Program::GetVehicleProperties(2, 33);
+	Engine* engine = Program::GetElectricEngineDetails(1.4f);
+	MotorcycleProperties* motorcycleProperties = Program::GetMotorcycleProperties();
 	Vehicle* motorcycle = new Motorcycle(owner, vehicleProperties, engine, motorcycleProperties);
 
-	Program::garage->addVehicle(motorcycle);
+	Program::s_Garage->addVehicle(motorcycle);
 }
 
-void Program::insertFuelBasedCarActivate()
+void Program::InsertFuelBasedCarActivate()
 {
-	Owner* owner = Program::getOwnersDetails();
-	VehicleProperties* vehicleProperties = Program::getVehicleProperties(4, 31);
-	Engine* engine = Program::getFuelEngineDetails(55);
-	CarProperties* carProperties = Program::getCarProperties();
+	Owner* owner = Program::GetOwnersDetails();
+	VehicleProperties* vehicleProperties = Program::GetVehicleProperties(4, 31);
+	Engine* engine = Program::GetFuelEngineDetails(55);
+	CarProperties* carProperties = Program::GetCarProperties();
 	Vehicle* car = new Car(owner, vehicleProperties, engine, carProperties);
 
-	Program::garage->addVehicle(car);
+	Program::s_Garage->addVehicle(car);
 }
 
-void Program::insertElectricCarActivate()
+void Program::InsertElectricCarActivate()
 {
-	Owner* owner = Program::getOwnersDetails();
-	VehicleProperties* vehicleProperties = Program::getVehicleProperties(4, 31);
-	Engine* engine = Program::getElectricEngineDetails(1.8);
-	CarProperties* carProperties = Program::getCarProperties();
+	Owner* owner = Program::GetOwnersDetails();
+	VehicleProperties* vehicleProperties = Program::GetVehicleProperties(4, 31);
+	Engine* engine = Program::GetElectricEngineDetails(1.8f);
+	CarProperties* carProperties = Program::GetCarProperties();
 	Vehicle* car = new Car(owner, vehicleProperties, engine, carProperties);
 
-	Program::garage->addVehicle(car);
+	Program::s_Garage->addVehicle(car);
 }
 
-void Program::insertFuelBasedTruckActivate()
+void Program::InsertFuelBasedTruckActivate()
 {
-	Owner* owner = Program::getOwnersDetails();
-	VehicleProperties* vehicleProperties = Program::getVehicleProperties(12, 26);
-	Engine* engine = Program::getFuelEngineDetails(110);
-	TruckProperties* truckProperties = Program::getTruckProperties();
+	Owner* owner = Program::GetOwnersDetails();
+	VehicleProperties* vehicleProperties = Program::GetVehicleProperties(12, 26);
+	Engine* engine = Program::GetFuelEngineDetails(110);
+	TruckProperties* truckProperties = Program::GetTruckProperties();
 	Vehicle* truck = new Truck(owner, vehicleProperties, engine, truckProperties);
 
-	Program::garage->addVehicle(truck);
+	Program::s_Garage->addVehicle(truck);
 }
 
-void Program::displayListWithFilters(bool inRepair, bool repaired, bool payedFor)
+void Program::DisplayListWithFilters(bool i_InRepair, bool i_Repaired, bool i_PayedFor)
 {
 	string str = "";
 	int i = 1;
 
-	for (Vehicle* vehicle : Program::garage->getVehicles())
+	for (Vehicle* vehicle : Program::s_Garage->getVehicles())
 	{
-		if (!inRepair && vehicle->getStatus() == StatusEnum::inRepair ||
-			!repaired && vehicle->getStatus() == StatusEnum::repaired ||
-			!payedFor && vehicle->getStatus() == StatusEnum::payedFor)
+		if (!i_InRepair && vehicle->getStatus() == StatusEnum::inRepair ||
+			!i_Repaired && vehicle->getStatus() == StatusEnum::repaired ||
+			!i_PayedFor && vehicle->getStatus() == StatusEnum::payedFor)
 		{
 			continue;
 		}
@@ -358,120 +375,134 @@ void Program::displayListWithFilters(bool inRepair, bool repaired, bool payedFor
 	cout << str;
 }
 
-void Program::displayAllActivate()
+void Program::DisplayAllActivate()
 {
-	displayListWithFilters(true, true, true);
+	const bool v_IncludeInRepair = true;
+	const bool v_IncludeReparired = true;
+	const bool v_IncludePayedFor = true;
+
+	DisplayListWithFilters(v_IncludeInRepair, v_IncludeReparired, v_IncludePayedFor);
 }
 
-void Program::displayInRepairActivate()
+void Program::DisplayInRepairActivate()
 {
-	displayListWithFilters(true, false, false);
+	const bool v_IncludeInRepair = true;
+	const bool v_IncludeReparired = false;
+	const bool v_IncludePayedFor = false;
+
+	DisplayListWithFilters(v_IncludeInRepair, v_IncludeReparired, v_IncludePayedFor);
 }
 
-void Program::displayRepairedActivate()
+void Program::DisplayRepairedActivate()
 {
-	displayListWithFilters(false, true, false);
+	const bool v_IncludeInRepair = false;
+	const bool v_IncludeReparired = true;
+	const bool v_IncludePayedFor = false;
+
+	DisplayListWithFilters(v_IncludeInRepair, v_IncludeReparired, v_IncludePayedFor);
 }
 
-void Program::displayPayedForActivate()
+void Program::DisplayPayedForActivate()
 {
-	displayListWithFilters(false, false, true);
+	const bool v_IncludeInRepair = false;
+	const bool v_IncludeReparired = false;
+	const bool v_IncludePayedFor = true;
+
+	DisplayListWithFilters(v_IncludeInRepair, v_IncludeReparired, v_IncludePayedFor);
 }
 
-void Program::inRepairActivate()
+void Program::InRepairActivate()
 {
-	Program::currentVehicle->setStatus(StatusEnum::inRepair);
+	Program::s_CurrentVehicle->setStatus(StatusEnum::inRepair);
 }
 
-void Program::repairedActivate()
+void Program::RepairedActivate()
 {
-	Program::currentVehicle->setStatus(StatusEnum::repaired);
+	Program::s_CurrentVehicle->setStatus(StatusEnum::repaired);
 }
 
-void Program::payedForActivate()
+void Program::PayedForActivate()
 {
-	Program::currentVehicle->setStatus(StatusEnum::payedFor);
+	Program::s_CurrentVehicle->setStatus(StatusEnum::payedFor);
 }
 
-void Program::inflateActivate()
+void Program::InflateActivate()
 {
-	for (Wheel* wheel : Program::currentVehicle->getProperties()->getWheels())
+	for (Wheel* wheel : Program::s_CurrentVehicle->getProperties()->getWheels())
 	{
-		wheel->inflateAction(INT_MAX);
+		wheel->inflateAction(FLT_MAX);
 	}
-
-	cout << "The wheels were inflated successfully.";
 }
 
-void Program::refuelActivate(FuelTypeEnum fuelType)
+void Program::Refuel(FuelTypeEnum i_FuelType)
 {
 	float amountOfFuelToAdd = 0;
 
-	cout << "Please enter the amount of liters to refuel.\n";
+	cout << "Please enter the amount of liters to refuel." << endl;
 	cin >> amountOfFuelToAdd;
-	((FuelEngine*)Program::currentVehicle->getEngine())->refueling(amountOfFuelToAdd, fuelType);
+	((FuelEngine*)Program::s_CurrentVehicle->getEngine())->refueling(amountOfFuelToAdd, i_FuelType);
 }
 
 
-void Program::solerActivate()
+void Program::SolerActivate()
 {
 	try
 	{
-		refuelActivate(FuelTypeEnum::soler);
+		Refuel(FuelTypeEnum::soler);
 	}
 	catch (...)
 	{
-		cout << "\nSoler is not the appropiate type of fuel for this vehicle.";
+		cout << endl << "Soler is not the appropiate type of fuel for this vehicle.";
 	}
 }
 
-void Program::octane95Activate()
+void Program::Octane95Activate()
 {
 	try
 	{
-		refuelActivate(FuelTypeEnum::octane95);
+		Refuel(FuelTypeEnum::octane95);
 	}
 	catch (...)
 	{
-		cout << "\nOctane 95 is not the appropiate type of fuel for this vehicle.";
+		cout << endl << "Octane 95 is not the appropiate type of fuel for this vehicle.";
 	}
 }
 
-void Program::octane96Activate()
+void Program::Octane96Activate()
 {
 	try
 	{
-		refuelActivate(FuelTypeEnum::octane96);
+		Refuel(FuelTypeEnum::octane96);
 	}
 	catch (...)
 	{
-		cout << "\nOctane 96 is not the appropiate type of fuel for this vehicle.";
+		cout << endl << "Octane 96 is not the appropiate type of fuel for this vehicle.";
 	}
 }
 
-void Program::octane98Activate()
+void Program::Octane98Activate()
 {
 	try
 	{
-		refuelActivate(FuelTypeEnum::octane98);
+		Refuel(FuelTypeEnum::octane98);
 	}
 	catch (...)
 	{
-		cout << "\nOctane 98 is not the appropiate type of fuel for this vehicle.";
+		cout << endl << "Octane 98 is not the appropiate type of fuel for this vehicle.";
 	}
 }
 
-void Program::chargeActivate()
+void Program::ChargeActivate()
 {
 	float amountOfEnergyToAdd = 0;
 
 	cout << "Please enter the amount of minutes to charge.";
 	cin >> amountOfEnergyToAdd;
-	((ElectricEngine*)Program::currentVehicle->getEngine())->recharge(amountOfEnergyToAdd);
+	((ElectricEngine*)Program::s_CurrentVehicle->getEngine())->recharge(amountOfEnergyToAdd);
 }
 
-void Program::displayActivate()
+void Program::DisplayActivate()
 {
-	cout << Program::currentVehicle->toString();
+	cout << Program::s_CurrentVehicle->toString();
 }
 

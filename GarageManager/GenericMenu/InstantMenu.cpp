@@ -11,29 +11,29 @@ InstantMenu::~InstantMenu()
 {
 }
 
-InstantMenu::InstantMenu(SubMenu* _menu)
+InstantMenu::InstantMenu(SubMenu* i_Menu)
 {
-	menu = _menu;
+	m_Menu = i_Menu;
 }
 
-int InstantMenu::run()
+int InstantMenu::Run()
 {
 	int choise = 0;
 	bool validInput = false;
 	bool firstTry = true;
 
-	menu->show();
+	m_Menu->Show();
 	cout << "\nPlease choose an option.\n";
 	while (!validInput)
 	{
 		if (!firstTry)
 		{
-			cout << "Invalid input, the program expects a number between 1 to " << menu->getMenuItems().size() << ".\n";
+			cout << "Invalid input, the program expects a number between 1 to " << m_Menu->GetMenuItems().size() << ".\n";
 		}
 
 		cin >> choise;
 		firstTry = false;
-		validInput = choise <= menu->getMenuItems().size() && choise >= 1;
+		validInput = choise <= m_Menu->GetMenuItems().size() && choise >= 1;
 	}
 	
 	return choise;

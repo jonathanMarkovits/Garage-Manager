@@ -14,47 +14,47 @@ Menu::~Menu()
 {
 }
 
-Menu::Menu(string _name)
+Menu::Menu(string i_Name)
 {
-	name = _name;
-	visible = true;
+	m_Name = i_Name;
+	m_Visible = true;
 }
 
-Menu::Menu(activateFunctionDef _act, string _name)
+Menu::Menu(activateFunctionDef i_ActivateFunctions, string i_Name)
 {
-	activateFunctions.push_back(_act);
-	name = _name;
-	visible = true;
+	m_ActivateFunctions.push_back(i_ActivateFunctions);
+	m_Name = i_Name;
+	m_Visible = true;
 }
 
-string Menu::getName()
+string Menu::GetName()
 {
-	return name;
+	return m_Name;
 }
 
-vector<activateFunctionDef> Menu::getActivateFunctions()
+vector<activateFunctionDef> Menu::GetActivateFunctions()
 {
-	return activateFunctions;
+	return m_ActivateFunctions;
 }
 
-void Menu::insertActivateFunction(activateFunctionDef _activateFunction)
+void Menu::InsertActivateFunction(activateFunctionDef i_ActivateFunction)
 {
-	activateFunctions.push_back(_activateFunction);
+	m_ActivateFunctions.push_back(i_ActivateFunction);
 }
 
-bool Menu::getVisible()
+bool Menu::GetVisiblity()
 {
-	return visible;
+	return m_Visible;
 }
 
-void Menu::setVisible(bool _visible)
+void Menu::SetVisiblity(bool i_Visible)
 {
-	visible = _visible;
+	m_Visible = i_Visible;
 }
 
-void Menu::activate()
+void Menu::Activate()
 {
-	for (activateFunctionDef function : activateFunctions)
+	for (activateFunctionDef function : m_ActivateFunctions)
 	{
 		function();
 	}
