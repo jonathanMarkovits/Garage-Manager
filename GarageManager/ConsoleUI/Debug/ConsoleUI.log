@@ -1,4 +1,10 @@
 ﻿  Program.cpp
 c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(451): warning C4101: 'e': unreferenced local variable
 c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(455): warning C4101: 'e': unreferenced local variable
-  ConsoleUI.vcxproj -> C:\Users\jonim\source\repos\Garage-Manager\GarageManager\Debug\ConsoleUI.exe
+c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(467): warning C4101: 'e': unreferenced local variable
+c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(471): warning C4101: 'e': unreferenced local variable
+c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(483): warning C4101: 'e': unreferenced local variable
+c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(487): warning C4101: 'e': unreferenced local variable
+c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(499): warning C4101: 'e': unreferenced local variable
+c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(503): warning C4101: 'e': unreferenced local variable
+c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(522): error C2143: syntax error: missing ';' before '}'

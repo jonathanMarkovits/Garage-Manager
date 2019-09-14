@@ -518,7 +518,7 @@ void Program::ChargeActivate()
 	}
 	catch (range_error& e)
 	{
-		cout << endl << "The amount of fuel you try to add exceeds the capacity."
+		cout << endl << "The amount of fuel you try to add exceeds the capacity.";
 	}
 }
 
