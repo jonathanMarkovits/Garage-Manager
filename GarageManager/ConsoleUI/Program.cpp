@@ -41,20 +41,20 @@ void Program::Run()
 	s_VehicleOperation->InsertActivateFunction((activateFunctionDef)&FuelOrElectricMenu);
 	
 	SubMenu* changeStatus = new SubMenu("Change status");
-	MenuItem* inRepair = new MenuItem(&InRepairActivate, "In repair");
-	MenuItem* repaired = new MenuItem(&RepairedActivate, "Repaired");
-	MenuItem* payedFor = new MenuItem(&PayedForActivate, "Payed for");
+	MenuItem* inRepair = new MenuItem(&InRepairActivate, GarageLogicUtils::statusEnumToString(StatusEnum::inRepair));
+	MenuItem* repaired = new MenuItem(&RepairedActivate, GarageLogicUtils::statusEnumToString(StatusEnum::repaired));
+	MenuItem* payedFor = new MenuItem(&PayedForActivate, GarageLogicUtils::statusEnumToString(StatusEnum::payedFor));
 
-	MenuItem* inflate = new MenuItem(&InflateActivate, "Inflate tires to maximum.");
+	MenuItem* inflate = new MenuItem(&InflateActivate, "Inflate tires to maximum");
 
 	s_Refuel = new SubMenu("Refuel");
-	MenuItem* soler = new MenuItem(&SolerActivate, "Soler");
-	MenuItem* octane95 = new MenuItem(&Octane95Activate, "Octane 95");
-	MenuItem* octane96 = new MenuItem(&Octane96Activate, "Octane 96");
-	MenuItem* octane98 = new MenuItem(&Octane98Activate, "Octane 98");
+	MenuItem* soler = new MenuItem(&SolerActivate, GarageLogicUtils::fuelTypeEnumToString(FuelTypeEnum::soler));
+	MenuItem* octane95 = new MenuItem(&Octane95Activate, GarageLogicUtils::fuelTypeEnumToString(FuelTypeEnum::octane95));
+	MenuItem* octane96 = new MenuItem(&Octane96Activate, GarageLogicUtils::fuelTypeEnumToString(FuelTypeEnum::octane96));
+	MenuItem* octane98 = new MenuItem(&Octane98Activate, GarageLogicUtils::fuelTypeEnumToString(FuelTypeEnum::octane98));
 
 	s_Charge = new MenuItem(&ChargeActivate, "Charge");
-	MenuItem* display = new MenuItem(&DisplayActivate, "Display vehicle information.");
+	MenuItem* display = new MenuItem(&DisplayActivate, "Display vehicle information");
 
 	licenseNumberList->AddItem(displayAll);
 	licenseNumberList->AddItem(displayInRepair);
@@ -148,10 +148,10 @@ CarProperties* Program::GetCarProperties()
 {
 	SubMenu* menu = new SubMenu("Please choose the right color");
 	InstantMenu* colorMenu = new InstantMenu(menu);
-	MenuItem* black = new MenuItem("Black");
-	MenuItem* blue = new MenuItem("Blue");
-	MenuItem* gray = new MenuItem("Gray");
-	MenuItem* red = new MenuItem("Red");
+	MenuItem* black = new MenuItem(GarageLogicUtils::colorEnumToString(ColorEnum::black));
+	MenuItem* blue = new MenuItem(GarageLogicUtils::colorEnumToString(ColorEnum::blue));
+	MenuItem* gray = new MenuItem(GarageLogicUtils::colorEnumToString(ColorEnum::gray));
+	MenuItem* red = new MenuItem(GarageLogicUtils::colorEnumToString(ColorEnum::red));
 	ColorEnum color = (ColorEnum)0;
 	int numberOfDoors = 0;
 
@@ -171,10 +171,10 @@ FuelEngine* Program::GetFuelEngineDetails(float i_MaxAmountOfFuel)
 	FuelTypeEnum fuelType = (FuelTypeEnum)0;
 	float currentAmountOfFuel = 0;
 	SubMenu* menu = new SubMenu("Choose the fuel's type:");
-	MenuItem* soler = new MenuItem("Soler");
-	MenuItem* octane95 = new MenuItem("Octane 95");
-	MenuItem* octane96 = new MenuItem("Octane 96");
-	MenuItem* octane98 = new MenuItem("Octane 98");
+	MenuItem* soler = new MenuItem(GarageLogicUtils::fuelTypeEnumToString(FuelTypeEnum::soler));
+	MenuItem* octane95 = new MenuItem(GarageLogicUtils::fuelTypeEnumToString(FuelTypeEnum::octane95));
+	MenuItem* octane96 = new MenuItem(GarageLogicUtils::fuelTypeEnumToString(FuelTypeEnum::octane96));
+	MenuItem* octane98 = new MenuItem(GarageLogicUtils::fuelTypeEnumToString(FuelTypeEnum::octane98));
 	InstantMenu* fuelMenu = new InstantMenu(menu);
 
 	menu->AddItem(soler);
@@ -202,10 +202,10 @@ MotorcycleProperties* Program::GetMotorcycleProperties()
 {
 	SubMenu* menu = new SubMenu("Please choose the license's type.");
 	InstantMenu* licenseTypeMenu = new InstantMenu(menu);
-	MenuItem* a = new MenuItem("A");
-	MenuItem* a1 = new MenuItem("A1");
-	MenuItem* a2 = new MenuItem("A2");
-	MenuItem* b = new MenuItem("B");
+	MenuItem* a = new MenuItem(GarageLogicUtils::licenseTypeEnumToString(LicenseTypeEnum::A));
+	MenuItem* a1 = new MenuItem(GarageLogicUtils::licenseTypeEnumToString(LicenseTypeEnum::A1));
+	MenuItem* a2 = new MenuItem(GarageLogicUtils::licenseTypeEnumToString(LicenseTypeEnum::A2));
+	MenuItem* b = new MenuItem(GarageLogicUtils::licenseTypeEnumToString(LicenseTypeEnum::B));
 	LicenseTypeEnum licenseType = (LicenseTypeEnum)0;
 	int engineVolume = 0;
 
@@ -510,9 +510,16 @@ void Program::ChargeActivate()
 {
 	float amountOfEnergyToAdd = 0;
 
-	cout << "Please enter the amount of minutes to charge.";
+	cout << "Please enter the amount of minutes to charge." << endl;
 	cin >> amountOfEnergyToAdd;
-	((ElectricEngine*)Program::s_CurrentVehicle->getEngine())->recharge(amountOfEnergyToAdd);
+	try
+	{
+		((ElectricEngine*)Program::s_CurrentVehicle->getEngine())->recharge(amountOfEnergyToAdd);
+	}
+	catch (range_error& e)
+	{
+		cout << endl << "The amount of fuel you try to add exceeds the capacity."
+	}
 }
 
 void Program::DisplayActivate()
