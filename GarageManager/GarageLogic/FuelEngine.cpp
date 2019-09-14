@@ -11,27 +11,27 @@ FuelEngine::~FuelEngine()
 {
 }
 
-FuelEngine::FuelEngine(FuelTypeEnum _fuelType, float _currentAmountOfFuel, float _maxAmountOfFuel) : Engine(_currentAmountOfFuel, _maxAmountOfFuel)
+FuelEngine::FuelEngine(FuelTypeEnum i_FuelType, float i_CurrentAmountOfFuel, float i_MaxAmountOfFuel) : Engine(i_CurrentAmountOfFuel, i_MaxAmountOfFuel)
 {
-	fuelType = _fuelType;
+	m_FuelType = i_FuelType;
 }
 
-void FuelEngine::refueling(float amountOfFuelToAdd, FuelTypeEnum _fuelType)
+void FuelEngine::refueling(float i_AmountOfFuelToAdd, FuelTypeEnum i_FuelType)
 {
-	if (fuelType != _fuelType)
+	if (m_FuelType != i_FuelType)
 	{
-		throw new exception;
+		throw invalid_argument("This is not the right fuel type.");
 	}
 
-	recharge(amountOfFuelToAdd);
+	recharge(i_AmountOfFuelToAdd);
 }
 
 string FuelEngine::toString()
 {
 	string toString = "";
 
-	toString += "Fuel type: " + GarageLogicUtils::fuelTypeEnumToString(fuelType) + '\n';
-	toString += "Remaining fuel percentage: " + to_string(getRemainingEnergyPercentage()) + '\n';
+	toString += "Fuel type: " + GarageLogicUtils::fuelTypeEnumToString(m_FuelType) + '\n';
+	toString += "Remaining fuel percentage: " + to_string(getRemainingEnergyPercentage()) + "% (" + to_string(m_MaxAmountOfEnergy - m_CurrentAmountOfEnergy) + " liters to fill)\n";
 	
 	return toString;
 }

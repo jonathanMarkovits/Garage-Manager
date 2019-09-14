@@ -85,8 +85,6 @@ void Program::Run()
 	changeStatus->AddItem(inRepair);
 	changeStatus->AddItem(repaired);
 	changeStatus->AddItem(payedFor);
-//	std::cout << std::fixed;
-//	std::cout << std::setprecision(2);
 	
 	mainMenu->Run();
 }
@@ -187,7 +185,7 @@ FuelEngine* Program::GetFuelEngineDetails(float i_MaxAmountOfFuel)
 	cout << "Please enter the current amount of fuel." << endl;
 	cin >> currentAmountOfFuel;
 	
-	return new FuelEngine(fuelType, i_MaxAmountOfFuel, currentAmountOfFuel);
+	return new FuelEngine(fuelType, currentAmountOfFuel, i_MaxAmountOfFuel);
 }
 
 ElectricEngine* Program::GetElectricEngineDetails(float i_MaxAmountOfEnergy)
@@ -450,9 +448,13 @@ void Program::SolerActivate()
 	{
 		Refuel(FuelTypeEnum::soler);
 	}
-	catch (...)
+	catch (invalid_argument& e)
 	{
 		cout << endl << "Soler is not the appropiate type of fuel for this vehicle.";
+	}
+	catch (range_error& e)
+	{
+		cout << endl << "The amount of fuel you try to add exceeds the capacity.";
 	}
 }
 
@@ -462,9 +464,13 @@ void Program::Octane95Activate()
 	{
 		Refuel(FuelTypeEnum::octane95);
 	}
-	catch (...)
+	catch (invalid_argument& e)
 	{
 		cout << endl << "Octane 95 is not the appropiate type of fuel for this vehicle.";
+	}
+	catch (range_error& e)
+	{
+		cout << endl << "The amount of fuel you try to add exceeds the capacity.";
 	}
 }
 
@@ -474,9 +480,13 @@ void Program::Octane96Activate()
 	{
 		Refuel(FuelTypeEnum::octane96);
 	}
-	catch (...)
+	catch (invalid_argument& e)
 	{
 		cout << endl << "Octane 96 is not the appropiate type of fuel for this vehicle.";
+	}
+	catch (range_error& e)
+	{
+		cout << endl << "The amount of fuel you try to add exceeds the capacity.";
 	}
 }
 
@@ -486,9 +496,13 @@ void Program::Octane98Activate()
 	{
 		Refuel(FuelTypeEnum::octane98);
 	}
-	catch (...)
+	catch (invalid_argument& e)
 	{
 		cout << endl << "Octane 98 is not the appropiate type of fuel for this vehicle.";
+	}
+	catch (range_error& e)
+	{
+		cout << endl << "The amount of fuel you try to add exceeds the capacity.";
 	}
 }
 

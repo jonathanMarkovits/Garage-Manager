@@ -1,4 +1,4 @@
-﻿  ConsoleUI.cpp
-  Program.cpp
-  Generating Code...
+﻿  Program.cpp
+c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(451): warning C4101: 'e': unreferenced local variable
+c:\users\jonim\source\repos\garage-manager\garagemanager\consoleui\program.cpp(455): warning C4101: 'e': unreferenced local variable
   ConsoleUI.vcxproj -> C:\Users\jonim\source\repos\Garage-Manager\GarageManager\Debug\ConsoleUI.exe

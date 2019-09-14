@@ -6,8 +6,8 @@ class Engine
 {
 
 protected:
-	float currentAmountOfEnergy;
-	float maxAmountOfEnergy;
+	float m_CurrentAmountOfEnergy;
+	float m_MaxAmountOfEnergy;
 
 public:
 	Engine();

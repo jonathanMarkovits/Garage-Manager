@@ -11,23 +11,23 @@ Engine::~Engine()
 {
 }
 
-Engine::Engine(float _currentAmountOfEnergy, float _maxAmountOfEnergy)
+Engine::Engine(float i_CurrentAmountOfEnergy, float i_MaxAmountOfEnergy)
 {
-	currentAmountOfEnergy = _currentAmountOfEnergy;
-	maxAmountOfEnergy = _maxAmountOfEnergy;
+	m_CurrentAmountOfEnergy = i_CurrentAmountOfEnergy;
+	m_MaxAmountOfEnergy = i_MaxAmountOfEnergy;
 }
 
-void Engine::recharge(float amountOfEnergyToAdd)
+void Engine::recharge(float i_AmountOfEnergyToAdd)
 {
-	if (amountOfEnergyToAdd + currentAmountOfEnergy > maxAmountOfEnergy)
+	if (i_AmountOfEnergyToAdd + m_CurrentAmountOfEnergy > m_MaxAmountOfEnergy)
 	{
-
+		throw range_error("The amount of fuel you try to add exceeds the capacity.");
 	}
 
-	currentAmountOfEnergy += amountOfEnergyToAdd;
+	m_CurrentAmountOfEnergy += i_AmountOfEnergyToAdd;
 }
 
 float Engine::getRemainingEnergyPercentage()
 {
-	return currentAmountOfEnergy / maxAmountOfEnergy;
+	return (m_CurrentAmountOfEnergy / m_MaxAmountOfEnergy) * 100;
 }

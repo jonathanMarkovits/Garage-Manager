@@ -7,7 +7,7 @@ using namespace std;
 class FuelEngine : public Engine
 {
 
-	FuelTypeEnum fuelType;
+	FuelTypeEnum m_FuelType;
 
 public:
 	FuelEngine();
